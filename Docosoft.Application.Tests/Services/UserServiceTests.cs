@@ -6,6 +6,7 @@ using Docosoft.Application.Interfaces;
 using Docosoft.Application.Dtos.Users;
 using Docosoft.Domain.Entities;
 using Docosoft.Domain.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Docosoft.Application.Tests.Services
 {
@@ -14,15 +15,18 @@ namespace Docosoft.Application.Tests.Services
     {
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly Mock<IPasswordHasherService> _passwordHasherMock;
+        private readonly Mock<ILogger<User>> _loggerMock;
         private readonly UserService _userService;
         public UserServiceTests()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
             _passwordHasherMock = new Mock<IPasswordHasherService>();
+            _loggerMock = new Mock<ILogger<User>>();
 
             _userService = new UserService(
                 _userRepositoryMock.Object,
-                _passwordHasherMock.Object);
+                _passwordHasherMock.Object,
+                _loggerMock.Object);
         }
 
         [Fact]
